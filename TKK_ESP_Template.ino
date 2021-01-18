@@ -45,17 +45,6 @@ const char* wifi_password = "wifipass";
 String lastresetreason = "";
 
 //------------------------------------------------------------------------------
-void xmlrequest(AsyncWebServerRequest *request) {
-  String XML = F("<?xml version='1.0'?><xml>");
-  XML += F("<freeh>");
-  XML += String(ESP.getFreeHeap());
-  XML += F("</freeh>");
-  XML += F("<rst>");
-  XML += F("</rst>");
-  XML += F("</xml>");
-  request->send(200, "text/xml", XML);
-}
-//------------------------------------------------------------------------------
 void indexrequest(AsyncWebServerRequest *request) {
   request->send_P(200, "text/html", index_page); 
 }
@@ -92,7 +81,6 @@ void otaInit() {
 //------------------------------------------------------------------------------
 void serverInit() {
   server.on("/", HTTP_GET, indexrequest);
-  server.on("/xml", HTTP_PUT, xmlrequest);
   server.onNotFound([](AsyncWebServerRequest *request){
     request->send(404);
   });
